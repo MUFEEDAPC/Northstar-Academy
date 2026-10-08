@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+const { title = 'Northstar Academy | Practical Learning in Technology, Design & AI', description = 'Explore technology, design, marketing and AI learning paths focused on practical skills and project-based learning.', noindex: requestedNoindex = false } = Astro.props;
+const siteUrl = Astro.site;
+const isVercelPreview = process.env.VERCEL === '1' && process.env.VERCEL_ENV !== 'production';
+const noindex = requestedNoindex || !siteUrl || isVercelPreview;
+const canonicalPath = Astro.url.pathname === '/' ? '/' : `${Astro.url.pathname.replace(/\/+$/, '')}/`;
+const canonical = siteUrl ? new URL(canonicalPath, siteUrl).href : undefined;
+const structuredData = siteUrl ? {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', '@id': `${siteUrl.href}#organization`, name: 'Northstar Academy', url: siteUrl.href },
+    { '@type': 'WebSite', '@id': `${siteUrl.href}#website`, name: 'Northstar Academy', url: siteUrl.href, publisher: { '@id': `${siteUrl.href}#organization` } },
+    { '@type': 'WebPage', '@id': `${canonical}#webpage`, name: title, description, url: canonical, isPartOf: { '@id': `${siteUrl.href}#website` } },
+  ],
+} : undefined;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f8fafc" />
+    {!noindex && canonical && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <meta property="og:type" content="website" /><meta property="og:site_name" content="Northstar Academy" /><meta property="og:title" content={title} /><meta property="og:description" content={description} />{!noindex && canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    {!noindex && structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+  </head>
+  <body><a class="skip-link" href="#main-content">Skip to main content</a><slot /></body>
+</html>
