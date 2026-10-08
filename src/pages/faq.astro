@@ -1,0 +1,27 @@
+---
+import PageFrame from '../components/layout/PageFrame.astro';
+import { learningFaqs } from '../data/learning-faqs.js';
+---
+
+<PageFrame
+  title="Frequently asked questions | Northstar Academy test project"
+  description="Clear answers about the Northstar Academy test website, its learning-topic guides, its Kozhikode search focus, and what it does not offer."
+  faqItems={learningFaqs}
+>
+  <main class="content-page wrap" id="main-content" tabindex="-1">
+    <header class="content-intro">
+      <p class="eyebrow">STRAIGHT ANSWERS</p>
+      <h1>Questions about Northstar Academy</h1>
+      <p class="content-lede">This page explains what the test project is, what the learning-topic guides cover, and what visitors should not expect from it.</p>
+    </header>
+    <section class="faq-list" aria-label="Frequently asked questions">
+      {learningFaqs.map((item) => (
+        <article class="faq-item">
+          <h2>{item.question}</h2>
+          <p>{item.answer}</p>
+        </article>
+      ))}
+    </section>
+    <p class="content-note">Browse the <a href="/courses/">learning-topic guides</a> or read the <a href="/locations/kozhikode/">Kozhikode provider-comparison guide</a>.</p>
+  </main>
+</PageFrame>

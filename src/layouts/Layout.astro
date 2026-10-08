@@ -1,19 +1,30 @@
 ---
 import '../styles/global.css';
-const { title = 'Northstar Academy | Practical Learning in Technology, Design & AI', description = 'Explore technology, design, marketing and AI learning paths focused on practical skills and project-based learning.', noindex: requestedNoindex = false } = Astro.props;
+const { title = 'Northstar Academy | Educational SEO test project', description = 'Transparent educational topic guides from a test website. Northstar Academy is not an operating academy or training provider.', noindex: requestedNoindex = false, faqItems = [] } = Astro.props;
 const siteUrl = Astro.site;
 const isVercelPreview = process.env.VERCEL === '1' && process.env.VERCEL_ENV !== 'production';
 const noindex = requestedNoindex || !siteUrl || isVercelPreview;
 const canonicalPath = Astro.url.pathname === '/' ? '/' : `${Astro.url.pathname.replace(/\/+$/, '')}/`;
 const canonical = siteUrl ? new URL(canonicalPath, siteUrl).href : undefined;
-const structuredData = siteUrl ? {
-  '@context': 'https://schema.org',
-  '@graph': [
-    { '@type': 'Organization', '@id': `${siteUrl.href}#organization`, name: 'Northstar Academy', url: siteUrl.href },
-    { '@type': 'WebSite', '@id': `${siteUrl.href}#website`, name: 'Northstar Academy', url: siteUrl.href, publisher: { '@id': `${siteUrl.href}#organization` } },
-    { '@type': 'WebPage', '@id': `${canonical}#webpage`, name: title, description, url: canonical, isPartOf: { '@id': `${siteUrl.href}#website` } },
-  ],
-} : undefined;
+const structuredData = siteUrl ? (() => {
+  const graph = [
+    { '@type': 'WebSite', '@id': `${siteUrl.href}#website`, name: 'Northstar Academy', description: 'A transparent educational SEO test website; not an operating academy or training provider.', url: siteUrl.href, inLanguage: 'en' },
+    { '@type': 'WebPage', '@id': `${canonical}#webpage`, name: title, description, url: canonical, inLanguage: 'en', isPartOf: { '@id': `${siteUrl.href}#website` } },
+  ];
+  if (faqItems.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqItems.map(({ question, answer }) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
+    });
+  }
+  return { '@context': 'https://schema.org', '@graph': graph };
+})() : undefined;
+const robotsContent = noindex ? 'noindex,follow' : 'index,follow';
 ---
 <!doctype html>
 <html lang="en">
@@ -23,7 +34,7 @@ const structuredData = siteUrl ? {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f8fafc" />
     {!noindex && canonical && <link rel="canonical" href={canonical} />}
-    {noindex && <meta name="robots" content="noindex,follow" />}
+    <meta name="robots" content={robotsContent} />
     <meta property="og:type" content="website" /><meta property="og:site_name" content="Northstar Academy" /><meta property="og:title" content={title} /><meta property="og:description" content={description} />{!noindex && canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />

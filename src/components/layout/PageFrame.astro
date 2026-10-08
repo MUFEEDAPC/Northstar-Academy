@@ -1,0 +1,13 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteHeader from './SiteHeader.astro';
+import SiteFooter from './SiteFooter.astro';
+
+const { title, description, noindex = false, faqItems = [] } = Astro.props;
+---
+
+<Layout title={title} description={description} noindex={noindex} faqItems={faqItems}>
+  <SiteHeader />
+  <slot />
+  <SiteFooter />
+</Layout>

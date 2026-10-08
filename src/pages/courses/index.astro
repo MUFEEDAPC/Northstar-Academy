@@ -1,0 +1,32 @@
+---
+import PageFrame from '../../components/layout/PageFrame.astro';
+import { learningTopics } from '../../data/learning-topics.js';
+---
+
+<PageFrame
+  title="Technology and digital learning topics | Northstar Academy test project"
+  description="Browse educational guides to AI web development, digital marketing, product design and data analytics. These are topics, not courses offered by an operating academy."
+>
+  <main class="content-page wrap" id="main-content" tabindex="-1">
+    <header class="content-intro">
+      <p class="eyebrow">EDUCATIONAL TOPIC GUIDES</p>
+      <h1>Explore technology and digital learning topics</h1>
+      <p class="content-lede">Understand what each subject involves and what to ask when comparing a real course or training provider.</p>
+      <p class="project-disclosure"><strong>These are topic guides, not course offers.</strong> Northstar Academy is a test website, not an operating academy. No enrollment is available.</p>
+    </header>
+
+    <section class="courses-grid topic-guide-grid" aria-label="Learning topic guides">
+      {learningTopics.map((topic) => (
+        <article class="course-card">
+          <div class={`course-art ${topic.tone}`} aria-hidden="true"><div class="course-art-orbit"></div><span>{topic.icon}</span><small>{topic.category}</small></div>
+          <div class="course-content">
+            <h2>{topic.title}</h2>
+            <p>{topic.summary}</p>
+            <div class="course-foot"><span>Educational guide</span><a href={`/courses/${topic.slug}/`} aria-label={`Read the ${topic.title} topic guide`}>Read guide <b>↗</b></a></div>
+          </div>
+        </article>
+      ))}
+    </section>
+    <p class="content-note">For questions about evaluating local providers, see the <a href="/locations/kozhikode/">Kozhikode learning research guide</a> or the <a href="/faq/">FAQ</a>.</p>
+  </main>
+</PageFrame>

@@ -1,0 +1,105 @@
+---
+import PageFrame from '../../components/layout/PageFrame.astro';
+import { learningTopics } from '../../data/learning-topics.js';
+
+const topicDetails = {
+  'ai-web-development': {
+    overview: 'AI-assisted web development describes using AI tools during parts of website and application work, while people remain responsible for understanding, reviewing, and testing the result.',
+    concepts: [
+      ['Web foundations', 'HTML, CSS, JavaScript, browser behavior, and accessibility help a developer understand what generated code is doing.'],
+      ['AI-assisted workflow', 'AI tools can help explore approaches, explain code, or draft an implementation. Their output still needs a human review against the task and constraints.'],
+      ['Verification', 'A working page should be checked for correctness, responsive behavior, keyboard access, and maintainability rather than accepted because a tool produced it.'],
+    ],
+    example: 'An illustrative practice prompt might be to build a small responsive page, ask an AI tool to suggest one improvement, then compare the suggestion against the actual requirements and test it.',
+    audience: 'This guide is for people researching how AI tools fit into web-development work. It does not define a student profile or prerequisites for a Northstar course.',
+    angles: ['How generated code is reviewed and tested', 'How web fundamentals help evaluate AI output', 'How accessibility and usability are checked'],
+  },
+  'digital-marketing': {
+    overview: 'Digital marketing is the planning and measurement of communication through digital channels. Its work starts with understanding an audience and defining what a campaign is meant to achieve.',
+    concepts: [
+      ['Audience and intent', 'A useful plan begins with a clear audience, the need being addressed, and a specific communication goal.'],
+      ['Content and channels', 'Content format and channel choices should follow the audience and goal instead of being selected only because a platform is popular.'],
+      ['Measurement', 'Campaign reporting should define what is measured, how the figures are collected, and what limits apply before conclusions are drawn.'],
+    ],
+    example: 'An illustrative exercise could compare two ways to present the same message, define what response would indicate, and describe what additional context is needed to interpret the results.',
+    audience: 'This guide is for people trying to understand the relationship between audience research, campaign planning, and measurement. It is not a description of a Northstar marketing course.',
+    angles: ['How an audience and objective are defined', 'How content and channels are selected', 'How campaign results are measured and interpreted'],
+  },
+  'product-design': {
+    overview: 'Product design connects a user problem to the structure and interaction of a digital product. Sketches and prototypes can help people examine an idea before it is built.',
+    concepts: [
+      ['Problem framing', 'Design work starts by understanding the task, the people affected, and the constraints rather than jumping straight to a visual solution.'],
+      ['Structure and interaction', 'Information hierarchy, navigation, and interface behavior shape whether people can understand and use a digital product.'],
+      ['Prototypes and feedback', 'A prototype makes an idea easier to inspect. Feedback should be tied to the original problem and used to improve the design.'],
+    ],
+    example: 'An illustrative exercise could map the steps for completing one task, sketch the key screens, and ask another person to try the flow while noting where the instructions or controls are unclear.',
+    audience: 'This guide is for people exploring how research, interaction choices, and prototyping relate to digital products. It does not define admission criteria or a Northstar curriculum.',
+    angles: ['How user needs and product problems are researched', 'How structure and interactions are explored', 'How prototypes are used to test design decisions'],
+  },
+  'data-analytics': {
+    overview: 'Data analytics is the process of examining data to answer a question and communicate what the evidence supports. Clear analysis distinguishes observed results from assumptions.',
+    concepts: [
+      ['Question and data quality', 'An analysis begins with a question. The source, completeness, definitions, and limitations of the data affect what can reasonably be concluded.'],
+      ['Exploration and interpretation', 'Comparisons and summaries can reveal patterns, but correlation or a change in a metric does not alone explain why it occurred.'],
+      ['Communication', 'A useful chart or report explains the finding, relevant context, and uncertainty in language that its intended audience can understand.'],
+    ],
+    example: 'An illustrative exercise could inspect a small sample dataset, identify missing or inconsistent entries, answer one bounded question, and write a short explanation that separates evidence from interpretation.',
+    audience: 'This guide is for people researching how data can be examined and explained. It does not promise a Northstar course, qualification, or career outcome.',
+    angles: ['How data is checked and prepared', 'How a question guides analysis', 'How findings are visualized and explained'],
+  },
+};
+
+export function getStaticPaths() {
+  return learningTopics.map((topic) => ({ params: { topic: topic.slug }, props: { topic } }));
+}
+
+const { topic } = Astro.props;
+const details = topicDetails[topic.slug];
+const relatedTopics = learningTopics.filter((item) => item.slug !== topic.slug);
+const title = `${topic.title}: topic guide | Northstar Academy test project`;
+const description = `${topic.summary} This is an educational guide from a test website, not a course or enrollment offer.`;
+---
+
+<PageFrame title={title} description={description}>
+  <main class="content-page wrap" id="main-content" tabindex="-1">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/courses/">Learning topics</a><span aria-hidden="true">/</span><span aria-current="page">{topic.title}</span></nav>
+    <header class="content-intro">
+      <p class="eyebrow">{topic.category} · EDUCATIONAL GUIDE</p>
+      <h1>{topic.title}: what this topic involves</h1>
+      <p class="content-lede">{details.overview}</p>
+      <p class="project-disclosure"><strong>Not a course offer:</strong> Northstar Academy is a test website, not an operating academy. This page is an editorial topic guide; it does not describe an available curriculum or enrollment.</p>
+    </header>
+
+    <article class="content-article">
+      <section class="content-section">
+        <h2>Key ideas within {topic.title.toLowerCase()}</h2>
+        {details.concepts.map(([heading, text]) => <div class="topic-concept"><h3>{heading}</h3><p>{text}</p></div>)}
+      </section>
+      <section class="content-section">
+        <h2>Who is this guide for?</h2>
+        <p>{details.audience}</p>
+      </section>
+      <section class="content-section">
+        <h2>An illustrative practice prompt</h2>
+        <p>{details.example}</p>
+        <p class="content-note">This is an example for thinking about the topic, not a completed student project or an assignment from Northstar Academy.</p>
+      </section>
+      <section class="content-section">
+        <h2>Questions to ask when comparing a real program</h2>
+        <p>These are research prompts for evaluating a real provider, not claims about Northstar Academy’s curriculum.</p>
+        <ul class="content-list">{details.angles.map((angle) => <li>{angle}</li>)}</ul>
+        <p>Ask for a published outline of what is taught, what practical work is included, and how progress is assessed. Confirm prerequisites, format, duration, fees, and instructor details directly with the provider.</p>
+      </section>
+      <section class="content-section">
+        <h2>Researching {topic.title.toLowerCase()} in Kozhikode or Calicut?</h2>
+        <p>This test project does not provide local training. Use the <a href="/locations/kozhikode/">Kozhikode learning research guide</a> to compare published information from actual providers.</p>
+      </section>
+    </article>
+
+    <section class="content-section related-topics">
+      <h2>Related learning topics</h2>
+      <ul>{relatedTopics.map((item) => <li><a href={`/courses/${item.slug}/`}>{item.title} topic guide</a></li>)}</ul>
+      <a class="text-link" href="/faq/">Read answers about this test project <span>↗</span></a>
+    </section>
+  </main>
+</PageFrame>

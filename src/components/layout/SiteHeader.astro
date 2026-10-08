@@ -1,0 +1,43 @@
+<header class="site-header" id="top">
+  <nav class="nav wrap" aria-label="Main navigation">
+    <a class="brand" href="/" aria-label="Northstar Academy test project home">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span>northstar<span class="brand-academy"> academy</span></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-links"><span></span><span></span></button>
+    <div class="nav-links" id="primary-links">
+      <a href="/">Home</a>
+      <a href="/courses/">Topics</a>
+      <a href="/about/">About</a>
+      <a href="/locations/kozhikode/">Kozhikode</a>
+      <a href="/faq/">FAQ</a>
+      <a href="/contact/">Contact</a>
+    </div>
+    <a class="button button-dark nav-cta" href="/courses/">Explore topics <span>↗</span></a>
+  </nav>
+</header>
+
+<script>
+  const header = document.querySelector('.site-header');
+  const menu = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.nav-links');
+  const syncHeader = () => header?.classList.toggle('scrolled', window.scrollY > 16);
+  window.addEventListener('scroll', syncHeader, { passive: true });
+  syncHeader();
+
+  const setMenuOpen = (open) => {
+    menu?.setAttribute('aria-expanded', String(open));
+    menu?.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    links?.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+  };
+
+  menu?.addEventListener('click', () => setMenuOpen(menu.getAttribute('aria-expanded') !== 'true'));
+  links?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu?.getAttribute('aria-expanded') === 'true') {
+      setMenuOpen(false);
+      menu.focus();
+    }
+  });
+</script>

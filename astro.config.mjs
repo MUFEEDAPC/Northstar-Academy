@@ -35,4 +35,4 @@ if (configuredSite) {
   site = 'https://northstar.academy';
 }
 
-export default defineConfig({ integrations: [react(), tailwind()], site });
+export default defineConfig({ integrations: [react(), tailwind()], site, trailingSlash: 'always' });

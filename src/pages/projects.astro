@@ -1,0 +1,26 @@
+---
+import PageFrame from '../components/layout/PageFrame.astro';
+import { projectIdeas } from '../data/project-ideas.js';
+---
+
+<PageFrame
+  title="Technology project ideas | Northstar Academy test project"
+  description="Explore illustrative project prompts for web development, AI, data and marketing. These are ideas only, not completed student work or academy outcomes."
+>
+  <main class="content-page wrap" id="main-content" tabindex="-1">
+    <header class="content-intro">
+      <p class="eyebrow">ILLUSTRATIVE PROJECT PROMPTS</p>
+      <h1>Project ideas for technology learning</h1>
+      <p class="content-lede">Use these prompts to think about how a topic might connect to practical work. They are examples, not completed projects or evidence of student outcomes.</p>
+    </header>
+    <section class="project-grid content-project-grid" aria-label="Illustrative project ideas">
+      {projectIdeas.map((project, index) => (
+        <article class={`project-card project-${index + 1}`}>
+          <div class="project-preview" aria-hidden="true"><div class="preview-window"><span></span><span></span><span></span><div class="preview-shape">{index === 0 ? '▤' : index === 1 ? '✳' : '▥'}</div><div class="preview-lines"><i></i><i></i><i></i></div></div><div class="project-index">0{index + 1}</div></div>
+          <div class="project-info"><small>Example prompt · {project.category}</small><h2>{project.title}</h2><p>{project.brief}</p><div class="project-tags"><span>Not student work</span></div></div>
+        </article>
+      ))}
+    </section>
+    <p class="content-note">Explore related <a href="/courses/">learning-topic guides</a>. Northstar Academy is a test website and does not provide instruction.</p>
+  </main>
+</PageFrame>

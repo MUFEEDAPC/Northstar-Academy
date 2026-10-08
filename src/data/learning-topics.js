@@ -1,0 +1,38 @@
+export const learningTopics = [
+  {
+    slug: 'ai-web-development',
+    title: 'AI Web Development',
+    category: 'AI & development',
+    icon: '✳',
+    tone: 'blue',
+    cardDescription: 'Explore how AI tools can assist modern website and application workflows.',
+    summary: 'An editorial guide to web development workflows that use AI tools, with a focus on reviewing and testing generated work.',
+  },
+  {
+    slug: 'digital-marketing',
+    title: 'Digital Marketing',
+    category: 'Growth & strategy',
+    icon: '↗',
+    tone: 'violet',
+    cardDescription: 'Explore audience insight, digital channels, campaign planning and measurement.',
+    summary: 'An editorial guide to digital marketing concepts, audience understanding, campaign planning and measurement.',
+  },
+  {
+    slug: 'product-design',
+    title: 'Product Design',
+    category: 'Design & creative',
+    icon: '◉',
+    tone: 'coral',
+    cardDescription: 'Explore how digital experiences move from a problem toward sketches and prototypes.',
+    summary: 'An editorial guide to product design, from understanding a problem through interface decisions and prototypes.',
+  },
+  {
+    slug: 'data-analytics',
+    title: 'Data Analytics',
+    category: 'Data & analytics',
+    icon: '▦',
+    tone: 'mint',
+    cardDescription: 'Explore ways to identify patterns in data and communicate findings clearly.',
+    summary: 'An editorial guide to interpreting data and communicating useful findings clearly.',
+  },
+];
